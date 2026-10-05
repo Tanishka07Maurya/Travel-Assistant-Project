@@ -6,7 +6,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
-df = pd.read_csv("C:\\Users\\DELL\\Desktop\\AI_Travel_Recommendation_Assistant\\data\\reviews.csv")
+df = pd.read_csv("data/reviews.csv")
 
 print(df.head())
 print(df.columns)
@@ -58,7 +58,7 @@ print(df[["user_rating", "sentiment_label"]].head(10))
 
 
 #Save the processed dataset
-df.to_csv("C:\\Users\\DELL\\Desktop\\AI_Travel_Recommendation_Assistant\\data\\cleaned_reviews.csv", index=False)
+df.to_csv("data/cleaned_reviews.csv", index=False)
 
 print("Cleaned dataset saved successfully!")
 
@@ -71,7 +71,7 @@ print(df["sentiment_label"].value_counts())
 sentiment_counts = df["sentiment_label"].value_counts()
 
 sentiment_counts.to_csv(
-    "C:\\Users\\DELL\\Desktop\\AI_Travel_Recommendation_Assistant\\data\\sentiment_distribution.csv",
+    "data/sentiment_distribution.csv",
     header=["review_count"]
 )
 
