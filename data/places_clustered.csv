@@ -1,0 +1,21 @@
+place_id,place_name,category,city,state,avg_rating,entry_fee_inr,est_visit_hours,scenery_score,food_score,nightlife_score,budget_score,crowd_score,persona_cluster,traveler_persona
+P01,Calangute Beach,Beach,Goa,Goa,4.4,0,2.0,4.87,4.93,4.84,4.86,4.96,1,Peaceful Nature & Scenic Retreat
+P02,Basilica of Bom Jesus,Church,Goa,Goa,4.5,0,1.0,4.74,4.82,4.73,4.74,4.88,1,Peaceful Nature & Scenic Retreat
+P03,Fort Aguada,Fort,Goa,Goa,4.2,0,1.5,4.64,4.8,4.73,4.84,4.58,2,Balanced Culture & Budget Destination
+P04,Dudhsagar Falls,Waterfall,Goa,Goa,4.6,500,3.0,4.91,4.93,4.74,4.79,4.76,1,Peaceful Nature & Scenic Retreat
+P05,Anjuna Beach,Beach,Goa,Goa,4.4,0,2.0,4.78,4.81,4.74,4.9,4.64,2,Balanced Culture & Budget Destination
+P06,Chapora Fort,Fort,Goa,Goa,4.2,0,1.0,4.43,4.69,4.52,4.65,4.64,2,Balanced Culture & Budget Destination
+P07,Se Cathedral,Church,Goa,Goa,4.5,0,1.0,4.72,4.92,4.73,4.82,4.8,1,Peaceful Nature & Scenic Retreat
+P08,Baga Beach,Beach,Goa,Goa,4.5,0,2.0,4.96,4.68,4.83,4.51,4.77,0,Party & Nightlife Hub
+P09,Arambol Beach,Beach,Goa,Goa,4.6,0,2.0,4.78,4.93,4.62,4.74,4.85,1,Peaceful Nature & Scenic Retreat
+P10,Palolem Beach,Beach,Goa,Goa,4.6,0,2.0,4.8,4.97,4.8,4.83,4.85,1,Peaceful Nature & Scenic Retreat
+P11,Colva Beach,Beach,Goa,Goa,4.3,0,2.0,4.75,4.68,4.74,4.48,4.65,0,Party & Nightlife Hub
+P12,Miramar Beach,Beach,Goa,Goa,4.2,0,1.5,4.95,4.84,4.83,4.81,4.94,1,Peaceful Nature & Scenic Retreat
+P13,Aguada Beach,Beach,Goa,Goa,4.5,0,2.0,4.85,4.76,4.63,4.69,4.66,2,Balanced Culture & Budget Destination
+P14,Dr. Salim Ali Bird Santuary,Bird Sanctuary,Goa,Goa,3.9,10,2.0,4.86,4.93,4.74,4.84,4.82,1,Peaceful Nature & Scenic Retreat
+P15,India Gate,War Memorial,Delhi,Delhi,4.6,0,0.5,4.76,4.8,4.85,4.76,4.92,1,Peaceful Nature & Scenic Retreat
+P16,Humayun's Tomb,Tomb,Delhi,Delhi,4.5,30,2.0,4.83,4.92,4.78,4.82,4.94,1,Peaceful Nature & Scenic Retreat
+P17,Akshardham Temple,Temple,Delhi,Delhi,4.6,60,5.0,4.71,4.85,4.81,4.74,4.73,2,Balanced Culture & Budget Destination
+P18,Lotus Temple,Temple,Delhi,Delhi,4.5,0,1.0,4.91,4.91,4.92,4.9,4.92,1,Peaceful Nature & Scenic Retreat
+P19,Red Fort,Fort,Delhi,Delhi,4.5,35,2.0,4.83,4.8,4.85,4.94,4.79,1,Peaceful Nature & Scenic Retreat
+P20,Sunder Nursery,Park,Delhi,Delhi,4.6,0,2.0,4.82,4.9,4.92,4.87,4.95,1,Peaceful Nature & Scenic Retreat
