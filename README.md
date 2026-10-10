@@ -29,8 +29,12 @@ Travel-Assistant-Project/
 ├── .gitignore                  # Git ignore rules
 ├── main.py                     # Flask REST API server
 └── requirements.txt            # Python dependencies
+```
 
-👥 Team & Responsibilities
+---
+## 👥 Team & Responsibilities
+---
+```text
 Member 1 (Preprocessing & Sentiment Analysis): Built text cleaning pipelines, lemmatization, POS tagging, and sentiment baseline models (1_preprocessing.py, 2_sentiment_model.py).
 
 Member 2 (Aspect-Based Sentiment Analysis): Implemented aspect extraction (Scenery, Food, Nightlife, Budget, Crowd) and generated composite aspect ratings (3_absa_extraction.py).
@@ -38,8 +42,12 @@ Member 2 (Aspect-Based Sentiment Analysis): Implemented aspect extraction (Scene
 Member 3 (Vector Database & RAG Pipeline): Engineered ChromaDB vector store indexing (sentence-transformers/all-MiniLM-L6-v2), Gemini 2.5 Flash RAG pipeline, XAI justification payload (5_vector_store.py, rag_itinerary.py), and Flask API endpoints (main.py).
 
 Member 4 (Full-Stack Frontend Integration): Designed the interactive React UI (frontend/), integrated Axios REST requests, and rendered dynamic Markdown itineraries with aspect visualizers.
+```
 
-🛠️ Tech Stack
+---
+## 🛠️ Tech Stack
+---
+```text
 Backend Framework: Python, Flask, Flask-CORS
 
 Machine Learning & NLP: NLTK, spaCy, scikit-learn, VADER
@@ -49,8 +57,13 @@ Vector Store & Embeddings: ChromaDB, all-MiniLM-L6-v2 (SentenceTransformers)
 Generative LLM: Google Gemini 2.5 Flash (google-genai SDK)
 
 Frontend: React.js, Vite, Axios, Markdown-to-JSX
+```
 
-🚀 Getting Started
+---
+## 🚀 Getting Started
+---
+
+```text
 Prerequisites
 Python 3.10+ installed
 
@@ -112,3 +125,4 @@ Start the Development Server:
 Bash
 npm run dev
 The React UI will run on http://localhost:5173.
+```
