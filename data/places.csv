@@ -1,0 +1,21 @@
+place_id,place_name,category,city,state,avg_rating,entry_fee_inr,est_visit_hours
+P01,Calangute Beach,Beach,Goa,Goa,4.4,0,2.0
+P02,Basilica of Bom Jesus,Church,Goa,Goa,4.5,0,1.0
+P03,Fort Aguada,Fort,Goa,Goa,4.2,0,1.5
+P04,Dudhsagar Falls,Waterfall,Goa,Goa,4.6,500,3.0
+P05,Anjuna Beach,Beach,Goa,Goa,4.4,0,2.0
+P06,Chapora Fort,Fort,Goa,Goa,4.2,0,1.0
+P07,Se Cathedral,Church,Goa,Goa,4.5,0,1.0
+P08,Baga Beach,Beach,Goa,Goa,4.5,0,2.0
+P09,Arambol Beach,Beach,Goa,Goa,4.6,0,2.0
+P10,Palolem Beach,Beach,Goa,Goa,4.6,0,2.0
+P11,Colva Beach,Beach,Goa,Goa,4.3,0,2.0
+P12,Miramar Beach,Beach,Goa,Goa,4.2,0,1.5
+P13,Aguada Beach,Beach,Goa,Goa,4.5,0,2.0
+P14,Dr. Salim Ali Bird Santuary,Bird Sanctuary,Goa,Goa,3.9,10,2.0
+P15,India Gate,War Memorial,Delhi,Delhi,4.6,0,0.5
+P16,Humayun's Tomb,Tomb,Delhi,Delhi,4.5,30,2.0
+P17,Akshardham Temple,Temple,Delhi,Delhi,4.6,60,5.0
+P18,Lotus Temple,Temple,Delhi,Delhi,4.5,0,1.0
+P19,Red Fort,Fort,Delhi,Delhi,4.5,35,2.0
+P20,Sunder Nursery,Park,Delhi,Delhi,4.6,0,2.0
