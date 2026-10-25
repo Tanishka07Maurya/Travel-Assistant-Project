@@ -1,94 +1,120 @@
+import os
+import json
+import traceback
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from src.rag_itinerary import TravelRAGPipeline
+
 import database
+from src.rag_itinerary import TravelRAGPipeline
 
 app = Flask(__name__)
 # Enable CORS for all routes and origins
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-# 1. Initialize SQLite database on startup
-database.init_db()
-
-# 2. Initialize RAG Pipeline
+# Initialize RAG Pipeline
 rag_pipeline = TravelRAGPipeline()
 
-# ----------------- AUTH ROUTES ----------------- #
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({"status": "running", "service": "travel.ai backend"}), 200
 
-@app.route("/api/register", methods=["POST", "OPTIONS"])
+# AUTHENTICATION ENDPOINTS
+@app.route('/api/register', methods=['POST'])
 def register():
-    if request.method == "OPTIONS":
-        return jsonify({"status": "ok"}), 200
+    try:
+        data = request.get_json() or {}
+        name = data.get('name', '').strip()
+        email = data.get('email', '').strip()
+        password = data.get('password', '').strip()
 
-    data = request.get_json() or {}
-    name = data.get("name")
-    email = data.get("email")
-    password = data.get("password")
+        if not name or not email or not password:
+            return jsonify({"error": "All fields (name, email, password) are required."}), 400
 
-    if not name or not email or not password:
-        return jsonify({"error": "Name, email, and password are required."}), 400
+        user = database.register_user(name, email, password)
+        if not user:
+            return jsonify({"error": "An account with this email already exists."}), 400
 
-    result = database.register_user(name, email, password)
-    if not result["success"]:
-        return jsonify({"error": result["error"]}), 409
+        return jsonify(user), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
-    return jsonify(result["user"]), 201
-
-
-@app.route("/api/login", methods=["POST", "OPTIONS"])
+@app.route('/api/login', methods=['POST'])
 def login():
-    if request.method == "OPTIONS":
-        return jsonify({"status": "ok"}), 200
+    try:
+        data = request.get_json() or {}
+        email = data.get('email', '').strip()
+        password = data.get('password', '').strip()
 
-    data = request.get_json() or {}
-    email = data.get("email")
-    password = data.get("password")
+        if not email or not password:
+            return jsonify({"error": "Email and password are required."}), 400
 
-    if not email or not password:
-        return jsonify({"error": "Email and password are required."}), 400
+        user = database.login_user(email, password)
+        if not user:
+            return jsonify({"error": "Invalid email or password."}), 401
 
-    result = database.authenticate_user(email, password)
-    if not result["success"]:
-        return jsonify({"error": result["error"]}), 401
+        return jsonify(user), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
-    return jsonify(result["user"]), 200
+# CORE GENERATION ENDPOINT
+@app.route('/api/generate-itinerary', methods=['POST'])
+def generate_itinerary():
+    try:
+        data = request.get_json() or {}
+        destination = data.get('destination') or data.get('where') or "Rajasthan"
+        query = data.get('query') or data.get('prompt') or ""
+        mode = data.get('mode', 'itinerary')
+        days = int(data.get('days', 3))
+        user_id = int(data.get('user_id', 1))
 
+        # Generate response using unified RAG pipeline
+        result = rag_pipeline.handle_request(
+            destination=destination,
+            query=query,
+            mode=mode,
+            days=days
+        )
 
-# ----------------- ITINERARY & TRIPS ROUTES ----------------- #
+        # Automatically persist multi-day itineraries to database
+        if mode == 'itinerary' and isinstance(result, dict) and 'itinerary_markdown' in result:
+            try:
+                save_title = f"{destination} ({days} Days Journey)"
+                database.save_user_trip(user_id, save_title, days, result)
+            except Exception as e:
+                print(f"Trip persistence notice: {e}")
 
-@app.route("/api/generate-itinerary", methods=["POST", "OPTIONS"])
-def generate_itinerary_endpoint():
-    if request.method == "OPTIONS":
-        return jsonify({"status": "ok"}), 200
+        return jsonify(result), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
-    data = request.get_json() or {}
-    query = data.get("query", "")
-    days = data.get("days", 3)
-    user_id = data.get("user_id")
+# TRIP PERSISTENCE ENDPOINTS
+@app.route('/api/save-trip', methods=['POST'])
+def save_trip():
+    try:
+        data = request.get_json() or {}
+        user_id = int(data.get('user_id', 1))
+        title = data.get('title', 'My Saved Journey')
+        days = int(data.get('days', 3))
+        trip_data = data.get('trip_data', {})
 
-    if not query:
-        return jsonify({"error": "Query string is required"}), 400
+        trip_id = database.save_user_trip(user_id, title, days, trip_data)
+        return jsonify({"status": "success", "trip_id": trip_id}), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
-    # Execute RAG & ABSA generation
-    result = rag_pipeline.generate_itinerary(query=query, days=days)
+@app.route('/api/user-trips/<int:user_id>', methods=['GET'])
+def get_user_trips(user_id):
+    try:
+        trips = database.get_user_trips(user_id)
+        return jsonify(trips), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify([]), 200
 
-    # Save to SQLite database if user is authenticated
-    if user_id and "itinerary_markdown" in result:
-        trip_title = query.split(".")[0][:60]
-        database.save_trip(user_id=user_id, query_title=trip_title, days=days, data=result)
-
-    return jsonify(result)
-
-
-@app.route("/api/user-trips/<int:user_id>", methods=["GET", "OPTIONS"])
-def get_trips(user_id):
-    if request.method == "OPTIONS":
-        return jsonify({"status": "ok"}), 200
-
-    trips = database.get_user_trips(user_id)
-    return jsonify(trips), 200
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     print("Starting Flask Backend Server with SQLite Database on http://127.0.0.1:5000")
-    app.run(debug=True, port=5000)
+    app.run(host='127.0.0.1', port=5000, debug=True)
